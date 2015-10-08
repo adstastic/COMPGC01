@@ -1,6 +1,11 @@
 package Tutorial_1;
 import java.util.Scanner;
 
+/**
+ * A simple calculator 
+ * @author amukherj
+ *
+ */
 public class SimpleCalculator {
 
 	public static void main(String[] args) {
@@ -17,6 +22,12 @@ public class SimpleCalculator {
 				float result = calculator(choice, a, b);
 				System.out.println(result);
 			} else if (choice == 5) {
+				System.out.println("Please input a number.");
+				String numberInput = s.nextLine();
+				int number = Integer.parseInt(numberInput);
+				int result = factorial(number);
+				System.out.println(result);
+			} else if (choice == 6) {
 				System.out.println("Goodbye!");
 				break;
 			} else {
@@ -25,13 +36,19 @@ public class SimpleCalculator {
 		}
 	}
 	
+	/**
+	 * Prints selection prompt and takes input
+	 * @param s
+	 * @return 
+	 */
 	public static float selector(Scanner s) {
 		System.out.println("Simple calculator. Please choose an operation:"
 				+'\n'+"1. Add"
 				+'\n'+"2. Subtract"
 				+'\n'+"3. Multiply"
 				+'\n'+"4. Divide"
-				+'\n'+"5. Exit");
+				+'\n'+"5. Factorial"
+				+'\n'+"6. Exit");
 		String input = s.nextLine(); 
 		float choice = Float.parseFloat(input);
 		return choice;		
@@ -73,5 +90,15 @@ public class SimpleCalculator {
 		float result = a / b;
 		return result;
 	}
+	
+	public static int factorial(int a) {
+		int result = 0;
+		for (int i = a-1; i > 0; i--) {
+			a *= i;
+		}
+		result = a;
+		return result;
+	}
+
 
 }
