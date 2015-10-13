@@ -15,11 +15,13 @@ public class ByteConversion {
         while (true) {
             System.out.println("Please enter a number of bytes to be converted:");
             float bytes = Float.parseFloat(s.nextLine());
-            float number = bytes;
-            System.out.println(bytes + UNITS[0]);
+            float[] number = new float[UNITS.length];
+            number[0] = bytes;
             for (int i = 1; i < UNITS.length; i++) {
-                number /= 1024;
-                System.out.println(number + UNITS[i]);
+                number[i] = number[i-1]/1024;
+            }
+            for (int i = 0; i < UNITS.length; i++) {
+            	System.out.println(number[i]+" "+UNITS[i]);
             }
             System.out.println("Again? (y/n)");
             String decision = s.nextLine();
