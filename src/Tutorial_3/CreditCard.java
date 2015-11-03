@@ -36,8 +36,14 @@ public class CreditCard {
 	
 	public boolean isValid() {
 		Calendar now = Calendar.getInstance();
-		if (expiryYear >= now.get(Calendar.YEAR) && expiryMonth >= now.get(Calendar.MONTH)) {
+		if (expiryYear > now.get(Calendar.YEAR)) {
 			return true;
+		} else if (expiryYear == now.get(Calendar.YEAR)) { 
+			if (expiryMonth > now.get(Calendar.MONTH)) {
+				return true;
+			} else {
+				return false;
+			}
 		} else {
 			return false;
 		}
