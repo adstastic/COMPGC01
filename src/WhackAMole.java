@@ -12,6 +12,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.LineNumberReader;
+import java.io.PrintWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -51,6 +59,8 @@ public class WhackAMole extends JFrame {
 					JOptionPane.showMessageDialog(game, "Success! Continue to level "+i+" :)");
 				} else {
 					JOptionPane.showMessageDialog(game, "Failure! Game over on level "+i+" :(");
+					String name = JOptionPane.showInputDialog("Please enter your name.");
+					save(name, game.score);
 					game.dispose();
 					System.exit(0);
 				}
@@ -223,10 +233,31 @@ public class WhackAMole extends JFrame {
 		double pass = (double) moles * Math.exp(-(double) difficulty / (double) level);
 		System.out.println(pass);
 		System.out.println((double) score);
-		if ((double) score >= pass) {
+		if ((int) score >= (int) pass) {
 			return true;
 		} else {
 			return false;
+		}
+	}
+	
+	public static void save(String name, int score) {
+		try {
+			File scoreboard = new File("./scoreboard.txt");
+			String out = String.format("%20s %3d", name, score);
+			if (scoreboard.exists()) { 
+				PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("scoreboard.txt", true)));
+				pw.println(out);
+				pw.close();
+			} else {
+				PrintWriter pw = new PrintWriter("scoreboard.txt", "UTF-8");
+				pw.println(out);
+				pw.close();
+			}
+				BufferedWriter bw = new BufferedWriter(new FileWriter(new File("Scoreboard")));
+				bw.write(out);
+				bw.close();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

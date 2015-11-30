@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -13,6 +14,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.security.cert.X509CRLEntry;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -30,6 +32,8 @@ public class Practice extends JFrame implements KeyListener, ActionListener, Foc
 
 	private JLabel numChars;
 	private JLabel display;
+	public JLabel coords;
+	public JPanel Pnl_dragDrop;
 	private int count = 0;
 	
 	public static void main(String[] args) {
@@ -38,13 +42,13 @@ public class Practice extends JFrame implements KeyListener, ActionListener, Foc
 
 	public Practice() {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(500,500);
+		setSize(550,500);
 		
 		JPanel Pnl_container = new JPanel();
 		Pnl_container.setLayout(new BorderLayout()); 
 		
 		JPanel Pnl_elements = new JPanel();
-		Pnl_elements.setLayout(new GridLayout(5,1)); 
+		Pnl_elements.setLayout(new GridLayout(6,1)); 
 		Pnl_elements.setBorder(new EmptyBorder(20, 20, 20, 20));
 		
 		JTextField input = new JTextField();
@@ -62,19 +66,24 @@ public class Practice extends JFrame implements KeyListener, ActionListener, Foc
 		focusTarget.addFocusListener(this);
 		display = new JLabel();
 		
-		JPanel Pnl_dragDrop = new JPanel();
+		coords = new JLabel();
+		Pnl_dragDrop = new JPanel();
+		Pnl_dragDrop.setPreferredSize(new Dimension(380,280));
+		Border border = BorderFactory.createLineBorder(Color.BLUE, 5);
+		Pnl_dragDrop.setBorder(border);
 		
 		Pnl_elements.add(focusTarget);
 		Pnl_elements.add(display);
 		Pnl_elements.add(numChars);
 		Pnl_elements.add(input);
 		Pnl_elements.add(jcb);
+		Pnl_elements.add(coords);
 		
 		JLabel test = new JLabel();
-		test.setText("drag & drop");
-		Border border = BorderFactory.createLineBorder(Color.BLUE, 5);
+		test.setText("Drag & Drop");
 		test.setBorder(border);
-		test.setPreferredSize(new Dimension(100, 100));
+		test.setPreferredSize(new Dimension(100, 50));
+		test.setLocation(0, 0);
 		test.addMouseListener(this);
 		test.addMouseMotionListener(this);
 		
@@ -93,7 +102,7 @@ public class Practice extends JFrame implements KeyListener, ActionListener, Foc
 	@Override
 	public void keyTyped(KeyEvent e) {
 		displayInfo(e, "KEY TYPED: ");
-		numChars.setText(Integer.toString(count++));
+		numChars.setText("Number of characters in box below: "+Integer.toString(count++));
 	}
 
 	@Override
@@ -128,65 +137,59 @@ public class Practice extends JFrame implements KeyListener, ActionListener, Foc
 	public void actionPerformed(ActionEvent e) {
 		JComboBox<String> jcb = (JComboBox<String>) e.getSource();
 		System.out.println(jcb.getSelectedItem());
-		JOptionPane.showMessageDialog(this, jcb.getSelectedItem());
+		JOptionPane.showMessageDialog(this, "Selected item: "+jcb.getSelectedItem());
 	}
-
+	
+	private String FOCUS_PREFIX = "The above button is ";
+	
 	@Override
 	public void focusGained(FocusEvent e) {
-		// TODO Auto-generated method stub
-		display.setText("IN FOCUS");
-		System.out.println(e.getSource());
+		display.setText(FOCUS_PREFIX+"IN FOCUS");
 	}
 
 	@Override
 	public void focusLost(FocusEvent e) {
-		// TODO Auto-generated method stub
-		display.setText("OUT OF FOCUS");
+		display.setText(FOCUS_PREFIX+"OUT OF FOCUS");
 	}
 
+	private int x;
+	private int y;
+	
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void mouseDragged(MouseEvent e) {
+//		coords.setText(x+" "+y);
+		JLabel s = (JLabel) e.getSource();
+		s.setLocation(e.getPoint());
+		s.repaint();
+		System.out.println("DRAG "+e.getPoint().toString());
+//		coords.setText("Name: "+s.getClass()+" Coordinates: "+s.getLocation().toString());
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
 		JLabel s = (JLabel) e.getSource();
-		System.out.println(e.getPoint());
+		coords.setText("Name: "+s.getClass()+" Coordinates: "+s.getLocation().toString());
 		s.setLocation(e.getPoint());
+		System.out.println("RELEASED "+e.getPoint());
 		s.repaint();
-		
 	}
+	
+	@Override
+	public void mouseMoved(MouseEvent e) {}
 
 	@Override
-	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void mouseClicked(MouseEvent e) {}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		System.out.println("PRESSED "+e.getPoint());
 	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {}
+
+	@Override
+	public void mouseExited(MouseEvent e) {}
+
 }

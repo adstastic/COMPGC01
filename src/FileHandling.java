@@ -20,6 +20,9 @@ public class FileHandling {
 				lnr.close();
 			} catch (Exception e) {
 				e.printStackTrace();
+				
+			} finally {
+				continue;
 			}
 			
 		}
