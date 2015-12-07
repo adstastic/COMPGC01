@@ -1,4 +1,5 @@
 package v2;
+import java.awt.geom.Area;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -59,7 +60,8 @@ public class PatientDataHandler {
 	protected void read() {
 		try {
 			JsonReader jsonReader = new JsonReader(new FileReader(this.FILEPATH));
-			this.patientList = gson.fromJson(jsonReader, new TypeToken<LinkedList<Patient>>(){}.getType());
+			this.patientList = gson.fromJson(jsonReader, 
+					new TypeToken<LinkedList<Patient>>(){}.getType());
 			L.info("Read data from "+this.FILEPATH);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -118,10 +120,15 @@ public class PatientDataHandler {
 	/* Getters and Setters */
 	protected Patient getAtIndex(Integer index) {
 		Patient p = this.patientList.get(index);
-		L.info("Getting patient "+p.getFirstName()+" "+p.getLastName()+" at index "+index);
+		L.info("Getting patient "+p.getFirstName()+
+				" "+p.getLastName()+" at index "+index);
 		return p;
 	}
 	
+	/**
+	 * Returns {@link List} of {@link Patient}s
+	 * @return {@link List} of {@link Patient}s
+	 */
 	protected List<Patient> getPatientList() {
 		return this.patientList;
 	}
@@ -132,6 +139,13 @@ public class PatientDataHandler {
 		return gson.toJson(patientList);
 	}
 	
+	
+	/**
+	 * {@link Patient} ID's are allocated as they are added to patientList. 
+	 * When Patients are deleted from patientList, the remaining ID's do not 
+	 * remain sequential. This remaps each Patient's ID to it's current index 
+	 * in patientList.
+	 */
 	public void reMapIds() {
 		for(int i=0; i<this.patientList.size(); i++) {
 			Patient p = patientList.get(i);

@@ -1,5 +1,6 @@
 package v2;
 
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -65,10 +66,18 @@ public class PatientPanel extends JPanel {
 		txtComments.setText(p.getComments());
 		JScrollPane spnComments = new JScrollPane(txtComments);
 		
+		JPanel pnlAppointments = new JPanel(new BorderLayout());
+		
 		String[] appointments = p.getAppointments().toArray(new String[p.getAppointments().size()]);
 		JList<String> lstAppointments = new JList<String>(appointments);
 		JScrollPane spnAppointments = new JScrollPane(lstAppointments);
 
+		JButton btnAddAppoinment = new JButton("Add appointment");
+		
+		pnlAppointments.add(spnAppointments, BorderLayout.CENTER);
+		pnlAppointments.add(btnAddAppoinment, BorderLayout.SOUTH);
+		
+		
 		if (p.getProfilePicturePath() != null) {
 			System.out.println(p.getProfilePicturePath());
 			pnlProfilePicture = new ImagePanel(p.getProfilePicturePath());
@@ -166,7 +175,7 @@ public class PatientPanel extends JPanel {
 		gbc.gridy = 15;
 		gbc.weighty = 1;
 		gbc.fill = GridBagConstraints.BOTH;
-		txtPanel.add(spnAppointments, gbc);
+		txtPanel.add(pnlAppointments, gbc);
 		
 		JPanel fldPanel = new JPanel(new GridBagLayout());
 		
@@ -245,11 +254,14 @@ public class PatientPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int answer = JOptionPane.showConfirmDialog(PatientPanel.this, 
-											"Are you sure you want to delete "+p.getFirstName()+" "+p.getLastName()+"?",
+											"Are you sure you want to delete "+
+											p.getFirstName()+" "+
+											p.getLastName()+"?",
 											"Confirm Delete",
 											JOptionPane.YES_NO_OPTION);
 				if (answer == JOptionPane.YES_OPTION) {
-					JOptionPane.showMessageDialog(PatientPanel.this, "Patient deleted.");
+					JOptionPane.showMessageDialog(PatientPanel.this, 
+												"Patient deleted.");
 					PDH.remove(p);
 					c.show(cards, "PATIENTLIST");
 					cards.remove(PatientPanel.this);
