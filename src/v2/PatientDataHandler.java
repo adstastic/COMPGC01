@@ -18,6 +18,10 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
+/**
+ * @author amukherj
+ *
+ */
 public class PatientDataHandler {
 	private final static Logger L = Logger.getLogger("L");
 	protected List<Patient> patientList = new LinkedList<Patient>();
@@ -36,19 +40,19 @@ public class PatientDataHandler {
 		Integer lastIndex = patientList.size();
 		p.setID(lastIndex);
 		patientList.add(p);
-		L.info("Patient "+p.FIRST_NAME+" "+p.LAST_NAME+" added.");
+		L.info("Patient "+p.getFirstName()+" "+p.getLastName()+" added.");
 		write();
 	}
 	
 	protected void update(Patient p) {
-		patientList.set(p.ID, p);
-		L.info("Patient "+p.FIRST_NAME+" "+p.LAST_NAME+" modified.");
+		patientList.set(p.getID(), p);
+		L.info("Patient "+p.getFirstName()+" "+p.getLastName()+" modified.");
 		write();
 	}
 	
 	protected void remove(Patient p) {
 		patientList.remove(p);
-		L.info("Patient "+p.FIRST_NAME+" "+p.LAST_NAME+" removed.");
+		L.info("Patient "+p.getFirstName()+" "+p.getLastName()+" removed.");
 		write();
 	}
 	
@@ -114,7 +118,7 @@ public class PatientDataHandler {
 	/* Getters and Setters */
 	protected Patient getAtIndex(Integer index) {
 		Patient p = this.patientList.get(index);
-		L.info("Getting patient "+p.FIRST_NAME+" "+p.LAST_NAME+" at index "+index);
+		L.info("Getting patient "+p.getFirstName()+" "+p.getLastName()+" at index "+index);
 		return p;
 	}
 	
@@ -122,8 +126,17 @@ public class PatientDataHandler {
 		return this.patientList;
 	}
 	
+	/* Utility methods */ 
 	@Override
 	public String toString() {
 		return gson.toJson(patientList);
+	}
+	
+	public void reMapIds() {
+		for(int i=0; i<this.patientList.size(); i++) {
+			Patient p = patientList.get(i);
+			p.setID(i);
+			update(p);
+		}
 	}
 }

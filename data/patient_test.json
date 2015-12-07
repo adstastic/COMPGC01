@@ -1,6 +1,6 @@
 [
   {
-    "ID": 1,
+    "ID": 0,
     "FIRST_NAME": "John",
     "LAST_NAME": "Smith",
     "DOB": "01/01/1991",
@@ -15,5 +15,18 @@
       "./images/scan1.jpg",
       "./images/scan2.jpg"
     ]
+  },
+  {
+    "ID": 1,
+    "FIRST_NAME": "Darth",
+    "LAST_NAME": "Vader",
+    "DOB": "10/10/2010",
+    "ADDRESS": "space",
+    "EMERGENCY_NUMBER": "+1 1111 1111",
+    "CONDITION": "Death",
+    "COMMENTS": "No cure (yet)",
+    "APPOINTMENTS": [],
+    "PROFILE_PICTURE": "images/darth-vader.jpg",
+    "MEDICAL_IMAGES": []
   }
 ]

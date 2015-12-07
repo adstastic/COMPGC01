@@ -1,9 +1,5 @@
 package v2;
 
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,26 +8,27 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
-
-import javax.imageio.ImageIO;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+
 public class Patient {
 	protected final static Logger L = Logger.getLogger("L");
-	protected Integer ID;
-	protected String FIRST_NAME;
-	protected String LAST_NAME;
-	protected String DOB;
-	protected String ADDRESS;
-	protected String EMERGENCY_NUMBER;
-	protected String CONDITION;
-	protected String COMMENTS;
-	protected List<String> APPOINTMENTS = new ArrayList<String>();
-	protected String PROFILE_PICTURE;
-	protected List<String> MEDICAL_IMAGES = new ArrayList<String>();
+	static AtomicInteger nextId = new AtomicInteger();
+	private Integer ID;
+	private String FIRST_NAME;
+	private String LAST_NAME;
+	private String DOB;
+	private String ADDRESS;
+	private String EMERGENCY_NUMBER;
+	private String CONDITION;
+	private String COMMENTS;
+	private List<String> APPOINTMENTS = new ArrayList<String>();
+	private String PROFILE_PICTURE;
+	private List<String> MEDICAL_IMAGES = new ArrayList<String>();
 		
 	public Patient(String fname, String lname, String dob, String addr, String epnumber, String condition) {
 		this.FIRST_NAME = fname;
@@ -42,23 +39,6 @@ public class Patient {
 		this.CONDITION = condition;
 		L.info("Patient "+this.FIRST_NAME+" "+this.LAST_NAME+" created.");
 	}
-				
-	protected void addImage(String imagePath, String destinationField) {
-		if (destinationField.equalsIgnoreCase("profile")) {
-			this.PROFILE_PICTURE = imagePath;
-		} else if (destinationField.equalsIgnoreCase("medical")) {
-			this.MEDICAL_IMAGES.add(imagePath);
-		}
-	}
-	
-	protected void addComment(String comments) {
-		this.COMMENTS = comments;
-	}
-	
-	protected void addAppointment(String appointment) {
-		this.APPOINTMENTS.add(appointment);
-	}
-	
 	
 	@Override
 	public String toString() {
@@ -103,26 +83,93 @@ public class Patient {
 	
 	/* Getters and Setters */
 	
-	protected Integer getID(Integer id) {
+	public Integer getID() {
 		return this.ID;
 	}
-
-	protected List<String> getAppointments() {
-		return this.APPOINTMENTS;
-	}
 	
-	protected String getProfilePicturePath() {
-		return this.PROFILE_PICTURE;
-	}
-	
-	protected List<String> getMedicalImagesPath() {
-		return this.MEDICAL_IMAGES;
-	}
-	
-	protected void setID(Integer id) {
+	public void setID(Integer id) {
 		this.ID = id;
 	}
 	
+	public String getFirstName() {
+		return FIRST_NAME;
+	}
+
+	public void setFirstName(String firstName) {
+		FIRST_NAME = firstName;
+	}
+
+	public String getLastName() {
+		return LAST_NAME;
+	}
+
+	public void setLastName(String lastName) {
+		LAST_NAME = lastName;
+	}
+
+	public String getDOB() {
+		return DOB;
+	}
+
+	public void setDOB(String dOB) {
+		DOB = dOB;
+	}
+
+	public String getAddress() {
+		return ADDRESS;
+	}
+
+	public void setAddress(String address) {
+		ADDRESS = address;
+	}
+
+	public String getEmergencyNumber() {
+		return EMERGENCY_NUMBER;
+	}
+
+	public void setEmergencyNumber(String emergencyNumber) {
+		EMERGENCY_NUMBER = emergencyNumber;
+	}
+
+	public String getCondition() {
+		return CONDITION;
+	}
+
+	public void setCondition(String condition) {
+		CONDITION = condition;
+	}
+
+	public String getComments() {
+		return COMMENTS;
+	}
+
+	public void setComments(String comments) {
+		COMMENTS = comments;
+	}
+
+	public List<String> getAppointments() {
+		return this.APPOINTMENTS;
+	}
+	
+	public void setAppointments(List<String> appointments) {
+		this.APPOINTMENTS = appointments;
+	}
+	
+	public String getProfilePicturePath() {
+		return this.PROFILE_PICTURE;
+	}
+	
+	public void setProfilePicturePath(String path) {
+		this.PROFILE_PICTURE = path;
+	}
+	
+	public List<String> getMedicalImagesPath() {
+		return this.MEDICAL_IMAGES;
+	}
+	
+	public void setMedicalImagesPath(List<String> pathList) {
+		this.MEDICAL_IMAGES = pathList;
+	}
 	
 	
 }
