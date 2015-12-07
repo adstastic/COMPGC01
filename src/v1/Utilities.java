@@ -1,4 +1,4 @@
-package patient_registry;
+package v1;
 
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
@@ -15,8 +15,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
 public class Utilities {
 	private static HashMap<String, String> userMap = new HashMap<String, String>();
+	private static JSONObject users;
 	
 	public static boolean authenticate(String username, String password) {
 		boolean login = false;
@@ -31,14 +35,7 @@ public class Utilities {
 	}
 	
 	public static boolean addUser(String username, String password) {
-		userMap.put(username, password);
-		try {
-			XMLencode(userMap, "users.xml");
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}g 
+		
 	}
 	
 	public void readObject(String filepath) throws Exception {
@@ -72,6 +69,16 @@ public class Utilities {
 //			}
 		d.close();
 		return userMap;
+	}
+	
+	public static void JSONWrite(JSONObject jo, String filename) throws Exception {
+		JSONWrite(jo, filename);
+	}
+	
+	public static JSONObject JSONRead(String filename) throws Exception {
+		JSONTokener jt = new JSONTokener(new BufferedInputStream(new FileInputStream(filename)));
+		JSONObject jo = new JSONObject(jt);
+		return jo;
 	}
 	
 }

@@ -1,0 +1,19 @@
+[
+  {
+    "ID": 1,
+    "FIRST_NAME": "John",
+    "LAST_NAME": "Smith",
+    "DOB": "01/01/1991",
+    "ADDRESS": "1 Road Place",
+    "EMERGENCY_NUMBER": "+44 1234 567 890",
+    "CONDITION": "Non-existence",
+    "APPOINTMENTS": [
+      "06/12/15 09:00"
+    ],
+    "PROFILE_PICTURE": "./images/patient1.jpg",
+    "MEDICAL_IMAGES": [
+      "./images/scan1.jpg",
+      "./images/scan2.jpg"
+    ]
+  }
+]
